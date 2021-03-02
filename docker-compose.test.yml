@@ -12,7 +12,7 @@ services:
       - etherbeam
   server:
     container_name: etherbeam_server_test
-    build: server/.
+    build: .
     environment:
       - RAILS_ENV=test
     networks:

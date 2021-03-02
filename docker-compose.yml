@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     volumes:
-      - ./server/tmp/db:/var/lib/postgresql/data:rw
+      - ./tmp/db:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
     networks:
@@ -18,8 +18,8 @@ services:
     environment:
       - RAILS_ENV=development
     volumes:
-      - ./server/log:/app/log:rw
-      - ./server/tmp:/app/tmp:rw
+      - ./log:/app/log:rw
+      - ./tmp:/app/tmp:rw
     ports:
       - "3001:3000"
     networks:

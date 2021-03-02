@@ -1,0 +1,32 @@
+version: "3.5"
+
+services:
+  database:
+    container_name: etherbeam_database_dev
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./server/tmp/db:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+    networks:
+      - etherbeam
+  server:
+    container_name: etherbeam_server_dev
+    build: .
+    environment:
+      - RAILS_ENV=development
+    volumes:
+      - ./server/log:/app/log:rw
+      - ./server/tmp:/app/tmp:rw
+    ports:
+      - "3001:3000"
+    networks:
+      - etherbeam
+    depends_on:
+      - database
+
+networks:
+  etherbeam:
+    name: etherbeam-net

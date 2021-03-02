@@ -1,0 +1,35 @@
+# Dependencies
+
+.bundle
+/node_modules
+/vendor/*
+!/vendor/.keep
+
+# Logs
+
+*.log
+/log/*
+!/log/.keep
+
+# Environment
+
+.env
+/config/master.key
+
+# Temporary files
+
+/tmp/*
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+/tmp/db/*
+!/tmp/db/.keep
+
+/storage/*
+!/storage/.keep
+.byebug_history
+
+# Miscellaneous
+
+.DS_Store

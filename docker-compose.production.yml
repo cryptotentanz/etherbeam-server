@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+  database:
+    container_name: etherbeam_database
+    image: postgres:latest
+    volumes:
+      - /var/db/etherbeam:/var/lib/postgresql/data:rw
+    networks:
+      - etherbeam
+    env_file:
+      - server/.env
+  server:
+    container_name: etherbeam_server
+    build: server/.
+    environment:
+      - RAILS_ENV=production
+    volumes:
+      - /var/log/etherbeam/server:/app/log:rw
+    networks:
+      etherbeam:
+      nginx:
+        aliases:
+          - etherbeam-server
+    depends_on:
+      - database
+
+networks:
+  etherbeam:
+    name: etherbeam-net
+  nginx:
+    external:
+      name: nginx-net

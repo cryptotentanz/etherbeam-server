@@ -1,0 +1,67 @@
+name: Test
+env:
+  NODE_ENV: test
+
+on: [push]
+
+jobs:
+  lint:
+    name: Check the code
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Get Ruby version
+        id: rbenv
+        run: echo "::set-output name=RUBY_VERSION::$(cat .ruby-version)"
+
+      - name: Set up Ruby ${{ steps.rbenv.outputs.RUBY_VERSION }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{ steps.rbenv.outputs.RUBY_VERSION }}"
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Run Rubocop
+        working-directory: ${{ env.SERVER_PATH }}
+        run: bundle exec rubocop --parallel
+
+  test:
+    name: Test the code
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Get Ruby version
+        id: rbenv
+        run: echo "::set-output name=RUBY_VERSION::$(cat .ruby-version)"
+
+      - name: Set up Ruby ${{ steps.rbenv.outputs.RUBY_VERSION }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{ steps.rbenv.outputs.RUBY_VERSION }}"
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Start database Docker container
+        run: docker-compose -f docker-compose.test.yml up -d database
+
+      - name: Set up database
+        run: bundle exec rake db:setup
+
+      - name: Run tests
+        run: bundle exec rspec

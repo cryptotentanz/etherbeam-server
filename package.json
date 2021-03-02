@@ -1,0 +1,22 @@
+{
+  "name": "@cryptotentanz/etherbeam-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ethereum cryptocurrency tracker (server side)",
+  "license": "MIT",
+  "bugs": "https://github.com/cryptotentanz/etherbeam-server/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cryptotentanz/etherbeam-server.git"
+  },
+  "author": "Benjamin Guibert <contact@bguibert.com>",
+  "scripts": {
+    "dev": "rails server -p 3001",
+    "format": "rubocop --auto-correct",
+    "lint": "rubocop",
+    "test": "rspec"
+  },
+  "devDependencies": {
+    "husky": "^5.1.3"
+  }
+}

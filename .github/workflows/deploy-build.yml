@@ -19,7 +19,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create .env file
-        working-directory: ${{ env.SERVER_PATH }}
         run: |
           echo POSTGRES_PASSWORD='${{ secrets.POSTGRES_PASSWORD }}' > .env
           echo ETH_SERVER_USER_PASSWORD='${{ secrets.SERVER_API_PASSWORD }}' >> .env
@@ -31,7 +30,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "${{ env.SERVER_PATH}}/*"
+          source: "*"
           target: "${{ env.APP_PATH }}"
           rm: false
 

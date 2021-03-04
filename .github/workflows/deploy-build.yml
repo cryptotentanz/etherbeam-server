@@ -45,3 +45,4 @@ jobs:
           script: |
             cd ${{ env.APP_PATH }}
             docker-compose -f docker-compose.production.yml build server
+            docker image prune -af
